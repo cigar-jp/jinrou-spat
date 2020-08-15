@@ -1,0 +1,68 @@
+page-index
+  div.relative.h-full
+    //- div.absolute.trbl0.z0
+    //-   img.s-full(src='/images/top/meadow.jpg')
+    div.absolute.z1.flex.flex-column.s-full
+      //- module-header
+      div.h-full.overflow-scroll(ref='body')
+        div.container.s-full.p25.f.fh.flex-column.text-center
+          div.fs30 人狼ゲーム
+          div.fs30.mb30 ワードウルフ
+          div.block.button.w-full.rounded-8.py12.mb6(each='{item in items}', onclick='{move}') {item.label}
+    module-tabbar
+  //- div.container
+  //-   div.sticky.t0.z100(data-is='module-header')
+  //-   h1 {title}
+  //-   div.my8
+  //-     div
+  //-       div.mb1(each='{item in items}', data-is='item-group', item='{item}')
+
+  style(type='less').
+    :scope {
+      display: block;
+    }
+
+  script.
+    this.items = [
+      { label: '始める', link: '/player-setting'},
+      { label: '遊び方', link: '/tutorial'},
+    ];
+
+    this.move = (e) => {
+      spat.router.push(e.item.item.link);
+    };
+
+
+  //-   this.title = 'Hello, spat with parcel!';
+
+  //-   this.preload = async ({req, res}) => {
+  //-     var ref = db.collection('groups');
+  //-     var ss = await ref.get({source: "cache"});
+      
+  //-     if (ss.empty) {
+  //-       var ss = await ref.get({source: "server"});
+  //-     }
+
+  //-     var items = ss.docs.map(doc => {
+  //-       return {
+  //-         id: doc.id,
+  //-         ref: doc.ref,
+  //-         data: doc.data(),
+  //-       }
+  //-     });
+
+  //-     return {
+  //-       items,
+  //-     };
+  //-   };
+
+  //-   this.head = () => {
+  //-     return {
+  //-       title: 'トップページ',
+  //-     };
+  //-   };
+
+  //-   this.on('show', async () => {
+
+  //-   });
+

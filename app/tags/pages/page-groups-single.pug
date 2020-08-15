@@ -1,0 +1,65 @@
+page-groups-single
+  div.container.p32
+    h1.mb16 {item.data.title}
+          
+    div.mb16
+      img(src='{item.data.image}')
+
+    div
+      a(href='/') TOP
+
+  style(type='less').
+    :scope {
+      display: block;
+    }
+
+  script.
+    this.item = {
+      data: {}
+    };
+
+    this.preload = async ({req, res}) => {
+      var ref = db.doc(req.Url.pathname);
+
+      try {
+        var ss = await ref.get({source: 'cache'});
+      }
+      catch(e) {
+        if (e.code === 'unavailable') {
+          var ss = await ref.get({source: 'server'});
+        }
+      }
+
+      // 存在しなかったら 404 に飛ばす
+      if (!ss.exists) {
+        res.status(404);
+        throw 'そのページは存在しません';
+      }
+
+      console.log('fromCache:', ss.metadata.fromCache);
+      console.log('group name:', ss.data().title);
+
+      var item = {
+        id: ss.id,
+        ref: ss.ref,
+        data: ss.data(),
+      };
+
+      return {
+        item,
+      };
+    };
+
+    this.head = () => {
+      return {
+        title: `${this.item.data.title} | spat`,
+        description: '詳細だよー',
+        ogp: {
+          image: this.item.data.image,
+        }
+      };
+    };
+
+    this.on('show', () => {
+      this.item.data.title += ' render client';
+    });

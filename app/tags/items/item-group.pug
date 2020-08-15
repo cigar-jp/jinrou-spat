@@ -1,0 +1,25 @@
+item-group
+  a.f.bg-white.p16(href='/{opts.item.ref.path}')
+    div.rect.w128.mr8
+      img(src='{opts.item.data.image}')
+    div {opts.item.data.title}
+
+  style(type='less').
+    :scope {
+      display: block;
+    }
+
+  script.
+    this.on('mount', () => {
+      //- document.addEventListener('click', () => {
+      //-   console.log('foo');
+      //- });
+    });
+
+    this.on('client', ({req, res}) => {
+      //- console.log('client: ', req.url);
+    });
+
+    this.on('server', ({req, res}) => {
+      //- console.log('server: ', req.url);
+    });

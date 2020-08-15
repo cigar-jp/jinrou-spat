@@ -1,0 +1,44 @@
+page-game-setting
+  div.flex.flex-column.h-full
+    module-header(title='ゲーム設定', back='{true}')
+    div.h-full.overflow-scroll(ref='body')
+      div.container.s-full.p25
+        div.mb30
+          div.fs20.bold.text-center.mb10 人数構成
+          div.f.fh
+            div.bg-white.border(onclick='{decrease}')
+              i.icon-minus
+            div.mx10 {playerNum}
+            div.bg-white.border(onclick='{increase}')
+              i.icon-plus
+        div.mb30
+          div.mb10(each='{player,index in players}')
+            div.f.fh
+              //- プレイヤー名消す
+              i.icon-close.mr30
+              input.border(type='text', placeholder='プレイヤー{index+1}') 
+        div.f.fh
+          atom-next-btn(item='{nextBtn}')
+
+  script.
+    this.on('mount', () => {
+    //- ローカルからプレイヤー人数取得
+      //- JSON.parse(localStorage.getItem('player_num'));
+    });
+
+    //- 人数を減らす
+    this.decrease = () => {
+      //- 最小プレイヤー人数
+      var minimumPlayernum = 3;
+      if (this.playerNum <= minimumPlayernum) {
+        spat.modal.alert('3人以下に設定することはできません');
+        return;
+      }
+      this.playerNum--;
+    };
+
+    //- 人数を増やす
+    this.increase = () => {
+      this.playerNum++;
+    };
+

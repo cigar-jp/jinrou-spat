@@ -1,0 +1,68 @@
+page-player-setting
+  div.flex.flex-column.h-full
+    module-header(title='プレイヤー設定', back='{true}')
+    div.h-full.overflow-scroll(ref='body')
+      div.container.s-full.p25
+        //- プレイヤー数
+        div.mb30
+          div.fs20.bold.text-center.mb10 プレイヤー数
+          div.f.fh
+            div.bg-white.border.px10.py5(onclick='{decrease}')
+              i.icon-minus
+            div.fs20.mx16 {playerNum}
+            div.bg-white.border.px10.py5(onclick='{increase}')
+              i.icon-plus
+        //- プレイヤー
+        div.mb30
+          div.mb10(each='{player,i in players}')
+            div.f.fh
+              //- プレイヤー名消す
+              i.icon-close.mr10(onclick='{resetName}')
+              input.border.rounded-8.w-full.bg-white.px10.py5(type='text', placeholder='プレイヤー{i+1}') 
+        //- ボタン
+        div.f.fh
+          atom-button(label='ゲーム設定へ', link='/game-setting')
+
+  script.
+    //- デフォルト人数
+    this.playerNum = 4;
+    //- ローカルに保存
+    localStorage.setItem('player_num', JSON.stringify(this.num));
+    //- プレイヤー名
+    this.players = [
+      {label: 'プレイヤー'},
+      {label: 'プレイヤー'},
+      {label: 'プレイヤー'},
+      {label: 'プレイヤー'},
+    ];
+
+    this.on('mount', () => {
+      //- ローカルから読み込む
+      //- localStorage.getItem('player_num', JSON.stringify(this.playerNum));
+    });
+
+    //- 人数を減らす
+    this.decrease = () => {
+      //- 最小プレイヤー人数
+      var minimumPlayernum = 3;
+      if (this.playerNum <= minimumPlayernum) {
+        spat.modal.alert('3人以下に設定することはできません');
+        return;
+      }
+      this.playerNum--;
+      this.players.pop({label: 'プレイヤー'});
+      //- ローカルに保存
+      localStorage.setItem('player_num', JSON.stringify(this.playerNum));
+    };
+
+    //- 人数を増やす
+    this.increase = () => {
+      this.playerNum++;
+      this.players.push({label: 'プレイヤー'});
+      //- ローカルに保存
+      localStorage.setItem('player_num', JSON.stringify(this.playerNum));
+    };
+
+    this.resetName = (e) => {
+      console.log(e.item);
+    };

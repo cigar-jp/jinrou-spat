@@ -1,0 +1,30 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "spat build",
+    "start": "spat start",
+    "dev": "spat dev",
+    "clean": "spat clean",
+    "icon": "fontcustom compile ./static/images/icons --font_name icons --output static/icons/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "firebase": "7.15.5",
+    "jquery": "^3.5.1",
+    "marked": "^0.8.2",
+    "moment": "^2.24.0",
+    "parcel-plugin-riot-pug": "git://github.com/phi-jp/parcel-plugin-riot-pug.git#037609bc2fbb17ec3c6097f879c6d29fd5e1c256",
+    "spat": "git://github.com/spat/spat.git#76e05f847c37719375d2475df4f944ea4c3ca732"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "less": "^3.11.1"
+  }
+}

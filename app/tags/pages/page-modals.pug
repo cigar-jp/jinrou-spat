@@ -1,0 +1,107 @@
+page-modals
+  div.flex.flex-column.h-full
+    div(data-is='module-header', title='モーダル')
+    div.h-full.overflow-scroll(ref='body')
+      div.container.py12
+        div.mb16(each='{section in sections}')
+          div.fs12.bold.ml8.mb4 {section.label}
+          div.bg-white.p16
+            div.inline-block.mr8.mb8(each='{item in section.items}')
+              button.button(onclick='{item.onclick}') {item.label}
+    module-tabbar
+
+  style(type='less').
+    :scope {
+      display: block;
+    }
+
+  script.
+
+    this.sections = [
+      {
+        label: 'alert',
+        items: [
+          {
+            label: '開く',
+            onclick: () => {
+              spat.modal.alert('Message', 'Ttile');
+            }
+          },
+          {
+            label: '開く(メッセージのみ)',
+            onclick: () => {
+              spat.modal.alert('Hello, world!');
+            }
+          },
+          {
+            label: '連続で開く',
+            onclick: async () => {
+              await spat.modal.alert('A');
+              await spat.modal.alert('B');
+              await spat.modal.alert('C');
+            }
+          },
+          {
+            label: '同時に開く',
+            onclick: () => {
+              spat.modal.alert('A');
+              spat.modal.alert('B');
+              spat.modal.alert('C');
+            }
+          },
+          {
+            label: '背景タッチ無効(dismissible:true)',
+            onclick: () => {
+              spat.modal.alert('OK でしか閉じれないよ', '', {
+                dismissible: false,
+              });
+            }
+          },
+
+          
+        ],
+      },
+      {
+        label: 'confirm',
+        items: [
+          {
+            label: '開く',
+            onclick: async () => {
+              var value = await spat.modal.confirm('Message', 'Ttile', {
+                dismissible: false,
+              });
+              spat.modal.alert(value.toString(), '結果は?');
+            }
+          }
+        ],
+      },
+      {
+        label: 'prompt',
+        items: [
+          {
+            label: '開く',
+            onclick: async () => {
+              var value = await spat.modal.prompt('Message', 'Ttile', {
+                dismissible: false,
+              });
+              spat.modal.alert(value.toString(), '結果は?');
+            }
+          }
+        ],
+      },
+      {
+        label: 'indicator',
+        items: [
+          {
+            label: '開く',
+            onclick: async () => {
+              var modal = spat.modal.indicator();
+
+              setTimeout(() => {
+                modal.close();
+              }, 2000);
+            }
+          }
+        ],
+      },
+    ];
